@@ -1,3 +1,4 @@
+from types import new_class
 from selenium import webdriver
 from bs4 import BeautifulSoup
 import pandas as pd
@@ -20,11 +21,11 @@ ratings = []
 synopsis = []
 
 def scrapeText(lst, classType, className):
-    findCLass = soup.find_all(classType, class= className)
-    if len(findCLass) == 0:
+    findClass = soup.find_all(classType, class=className)
+    if len(findClass) == 0:
        lst.append(None)
     else:
-        for n in findCLass:
+        for n in findClass:
             if className == ratingName:
                 lst.append(float(n.text[-3:]))
             else:
@@ -39,6 +40,8 @@ elems = driver.find_element_by_xpath("//a[@href]")
 for elem in elems:
     if vidDownloadURL in elem.get_attribute("href"):
         videoLinks.append(elem.get_attribute("href"))
+
+videoLinks = list(dict.fromkeys(videoLinks))
 
 for i in range(0,10):
     driver.get(videoLinks[i])
